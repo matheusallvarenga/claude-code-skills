@@ -1,3 +1,9 @@
+---
+name: full-stack-project-finisher
+description: Help developers complete projects from 70-100% to production-ready status. Excels at gap analysis, task decomposition, database design, API specifications, and testing strategies.
+context: fork
+---
+
 # Full-Stack Project Finisher
 
 A specialized skill designed to help developers take projects from 70% complete to production-ready. This skill excels at gap analysis, task decomposition, and providing actionable guidance to complete incomplete projects.

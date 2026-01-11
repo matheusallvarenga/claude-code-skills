@@ -1,3 +1,9 @@
+---
+name: itm-audit
+description: Sistema de Auditoria de Dados v5 para análise forense de arquivos distribuídos em múltiplas fontes (Google Drive, HD Externo, Notion). Inclui deduplicação, classificação e relatórios.
+context: fork
+---
+
 # ITM-AUDIT Skill
 
 ## Descrição

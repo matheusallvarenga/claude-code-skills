@@ -1,6 +1,7 @@
 ---
 name: request-optimizer
 description: This skill analyzes incoming requests to optimize context usage, decompose tasks efficiently, and recommend the best execution strategy. It runs automatically to evaluate request specificity, identify necessary explorations, suggest subtask decomposition, recommend appropriate models, and coordinate MCP/Agent/Skill activations with user approval before execution.
+context: fork
 ---
 
 # Request Optimizer Skill (POC)
