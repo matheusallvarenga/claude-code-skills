@@ -1,0 +1,30 @@
+{
+  "hash_info": {
+    "total_hashed": 19,
+    "total_errors": 0,
+    "hash_algorithm": "SHA-256 (64KB chunk + size)",
+    "generated_at": "2025-12-29T03:54:53.518439"
+  },
+  "hash_index": {
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/PROJECT-TRACKER.md": "af44b65e2395ce2e33c28a3f88125d7391f3d1af059f2f9a5287ff82e7f39b15_10345",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/CLAUDE.md": "58f1d93aef4a535b098847f91f9187dc1c47b8c7ed69a26ce6921b30e2c30cd2_3325",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/README.md": "31e7a051faaaa50d8c7639fe237966b4fa6fa7ee4d629aea0fbb05eb9dc6967e_2503",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/test-data/code/hello.py": "db63149bd0e2e4fa2f3446dba3074805e9e84b313fbd73bfa1c11eeaa9a70952_21",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/test-data/docs/documento2.txt": "4580fd52aa0ddd00808147cc497fbdb21dfb9c76f59e0e6e7315b1ed39eee2f6_40",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/test-data/docs/arquivo_grande.bin": "87752d8d61c345980e0ca2c467ef6d2ffb9d5e49b26d4c1bf1e8d255678329c1_102400",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/test-data/docs/documento1.txt": "556a474a104b610f779ac8a7aba42553860f08178866aa9e794562f928d88d92_54",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/test-data/duplicates/hello_backup.py": "db63149bd0e2e4fa2f3446dba3074805e9e84b313fbd73bfa1c11eeaa9a70952_21",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/test-data/duplicates/documento1_copia.txt": "556a474a104b610f779ac8a7aba42553860f08178866aa9e794562f928d88d92_54",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/test-data/duplicates/arquivo_grande_copia.bin": "87752d8d61c345980e0ca2c467ef6d2ffb9d5e49b26d4c1bf1e8d255678329c1_102400",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/data/scan_results.json": "3bcb4aba2d08f7d5b5b2904324d5eea80fafab1c87a44b8d4b6459e01c28a0bc_8178",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/data/dedup_results.json": "011d623ef279c324b7f64e40458abfabc3a49c31ff87f91fdb4634e5d861017c_3570",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/data/hash_index.json": "8788091eb8812de4ef629314f59d0f9d2d04049fb3d35f3c620cb3428307aa98_3703",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/audit-reports/20251229_032747/01-audit-report.md": "6ec605ba02007249af21c617656ef51f88ff62b74075984e42a2d6b7990339ca_1140",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/data/classification_results.json": "3061cd87b10ec8a5ab5bacbb981d82b0d517923defb8354eed74516c05a2c6e4_4674",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/prompts/DATA-AUDIT-SYSTEM-v5.md": "301f3c60bcac46cff57a8df3c40dbb0b755ebbbe6c8ebee6eb979fa91075ecb4_5266",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/audit-reports/20251229_032747/02-deduplication-report.md": "4fccd25097a7f8018bc270721bae282e24be7b1ac14690b090fdb347d867aa50_1533",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/audit-reports/20251229_032747/03-action-plan.md": "eeea719776a2739cd369404b10a3c5d246042a4e4cf96df0920709f1225c3923_1299",
+    "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/Projects/itm-audit/audit-reports/20251229_032747/00-index.md": "e8bfcc4ee0e043ca45af28c499fc5ba648c974b40b0c397d94e8fe759bed1f54_548"
+  },
+  "errors": []
+}

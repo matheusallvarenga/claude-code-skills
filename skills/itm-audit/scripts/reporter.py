@@ -1,0 +1,397 @@
+#!/usr/bin/env python3
+"""
+ITM Audit System - Reporter Module
+Geração de relatórios Markdown estruturados.
+"""
+
+import json
+import logging
+from pathlib import Path
+from datetime import datetime
+from typing import Dict, List, Optional
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('itm_audit.reporter')
+
+
+class Reporter:
+    """Gerador de relatórios Markdown."""
+    
+    def __init__(self, output_dir: str = "audit-reports"):
+        self.output_dir = Path(output_dir)
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.report_dir = self.output_dir / self.timestamp
+    
+    def generate_all_reports(self,
+                             scan_path: str,
+                             hash_path: str,
+                             dedup_path: str,
+                             classification_path: str) -> List[str]:
+        """
+        Gera todos os relatórios a partir dos dados de análise.
+        
+        Returns:
+            Lista de caminhos dos relatórios gerados
+        """
+        self.report_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Carregar dados
+        scan_data = self._load_json(scan_path)
+        hash_data = self._load_json(hash_path)
+        dedup_data = self._load_json(dedup_path)
+        class_data = self._load_json(classification_path)
+        
+        reports = []
+        
+        # 1. Relatório Principal
+        main_report = self._generate_main_report(scan_data, class_data, dedup_data)
+        main_path = self.report_dir / "01-audit-report.md"
+        self._save_report(main_path, main_report)
+        reports.append(str(main_path))
+        
+        # 2. Relatório de Duplicatas
+        dedup_report = self._generate_dedup_report(dedup_data)
+        dedup_path = self.report_dir / "02-deduplication-report.md"
+        self._save_report(dedup_path, dedup_report)
+        reports.append(str(dedup_path))
+        
+        # 3. Plano de Ação
+        action_report = self._generate_action_plan(dedup_data, class_data)
+        action_path = self.report_dir / "03-action-plan.md"
+        self._save_report(action_path, action_report)
+        reports.append(str(action_path))
+        
+        # 4. Index
+        index = self._generate_index(reports)
+        index_path = self.report_dir / "00-index.md"
+        self._save_report(index_path, index)
+        
+        logger.info(f"Relatórios gerados em: {self.report_dir}")
+        return reports
+    
+    def _generate_main_report(self, 
+                               scan_data: Dict,
+                               class_data: Dict,
+                               dedup_data: Dict) -> str:
+        """Gera relatório principal de auditoria."""
+        scan_info = scan_data.get('scan_info', {})
+        summary = class_data.get('summary', {})
+        dedup_info = dedup_data.get('dedup_info', {})
+        
+        report = f"""# 📊 Audit Report
+
+**Generated:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+---
+
+## Executive Summary
+
+| Metric | Value |
+|--------|-------|
+| Total Files | {scan_info.get('total_files', 'N/A'):,} |
+| Total Size | {summary.get('total_size_human', 'N/A')} |
+| Duplicate Groups | {dedup_info.get('total_groups', 'N/A'):,} |
+| Recoverable Space | {dedup_info.get('recoverable_human', 'N/A')} |
+| Scan Duration | {scan_info.get('scan_duration', 'N/A')} |
+
+---
+
+## Distribution by Type
+
+| Category | Files | Size | % Files | % Size |
+|----------|-------|------|---------|--------|
+"""
+        by_type = summary.get('by_type', {})
+        for cat, stats in by_type.items():
+            report += f"| {cat.capitalize()} | {stats['count']:,} | {stats['size_human']} | {stats['pct_count']} | {stats['pct_size']} |\n"
+
+        report += f"""
+---
+
+## Distribution by Age
+
+| Category | Files | Size | % Files | % Size |
+|----------|-------|------|---------|--------|
+"""
+        by_age = summary.get('by_age', {})
+        age_order = ['recente', 'ativo', 'arquivado', 'legacy', 'desconhecido']
+        for cat in age_order:
+            if cat in by_age:
+                stats = by_age[cat]
+                report += f"| {cat.capitalize()} | {stats['count']:,} | {stats['size_human']} | {stats['pct_count']} | {stats['pct_size']} |\n"
+
+        report += f"""
+---
+
+## Top 10 Largest Files
+
+| # | File | Size |
+|---|------|------|
+"""
+        files = scan_data.get('files', [])
+        largest = sorted([f for f in files if not f.get('error')], 
+                        key=lambda x: x.get('size_bytes', 0), 
+                        reverse=True)[:10]
+        
+        for i, f in enumerate(largest, 1):
+            name = Path(f['path']).name[:50]
+            size = self._human_size(f.get('size_bytes', 0))
+            report += f"| {i} | `{name}` | {size} |\n"
+
+        report += f"""
+---
+
+## Errors During Scan
+
+| Type | Count |
+|------|-------|
+| Total Errors | {scan_info.get('total_errors', 0)} |
+
+---
+
+*Report generated by ITM Audit System v5*
+"""
+        return report
+    
+    def _generate_dedup_report(self, dedup_data: Dict) -> str:
+        """Gera relatório de duplicatas."""
+        info = dedup_data.get('dedup_info', {})
+        groups = dedup_data.get('groups', [])
+        
+        report = f"""# 🔄 Deduplication Report
+
+**Generated:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+---
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Duplicate Groups | {info.get('total_groups', 0):,} |
+| Total Duplicate Files | {info.get('total_duplicates', 0):,} |
+| Unique Files | {info.get('total_unique', 0):,} |
+| **Recoverable Space** | **{info.get('recoverable_human', 'N/A')}** |
+
+---
+
+## Top 20 Duplicate Groups by Impact
+
+"""
+        for i, group in enumerate(groups[:20], 1):
+            recoverable = self._human_size(group.get('recoverable_space', 0))
+            file_count = group.get('file_count', 0)
+            individual_size = self._human_size(group.get('individual_size', 0))
+            
+            report += f"""### Group {i} — {recoverable} recoverable
+
+- **Files:** {file_count} copies
+- **Each file:** {individual_size}
+- **Hash:** `{group.get('hash', '')[:32]}...`
+
+| Path |
+|------|
+"""
+            for f in group.get('files', [])[:5]:
+                path = f.get('path', '')[:80]
+                report += f"| `{path}` |\n"
+            
+            if file_count > 5:
+                report += f"| *... and {file_count - 5} more* |\n"
+            
+            report += "\n"
+
+        report += f"""
+---
+
+## Recommendations
+
+1. **Review** each duplicate group before taking action
+2. **Keep** the oldest file (typically the original)
+3. **Verify** files are truly identical if in doubt
+4. **Backup** before mass deletion
+
+---
+
+*Report generated by ITM Audit System v5*
+"""
+        return report
+    
+    def _generate_action_plan(self, dedup_data: Dict, class_data: Dict) -> str:
+        """Gera plano de ação priorizado."""
+        dedup_info = dedup_data.get('dedup_info', {})
+        groups = dedup_data.get('groups', [])
+        summary = class_data.get('summary', {})
+        by_age = summary.get('by_age', {})
+        
+        # Calcular Pareto
+        total_recoverable = dedup_info.get('recoverable_bytes', 0)
+        pareto_target = total_recoverable * 0.8
+        accumulated = 0
+        pareto_groups = []
+        
+        for g in groups:
+            pareto_groups.append(g)
+            accumulated += g.get('recoverable_space', 0)
+            if accumulated >= pareto_target:
+                break
+        
+        report = f"""# ⚡ Action Plan — Pareto Priority
+
+**Generated:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+---
+
+## 80/20 Analysis
+
+> **{len(pareto_groups)} groups** represent **80% of recoverable space**
+> 
+> Focus on these for maximum impact with minimum effort.
+
+---
+
+## Priority 1: Remove Duplicates
+
+**Impact:** {dedup_info.get('recoverable_human', 'N/A')} recoverable
+
+### Quick Wins (Top 5)
+
+| # | Recoverable | Files | Action |
+|---|-------------|-------|--------|
+"""
+        for i, g in enumerate(pareto_groups[:5], 1):
+            rec = self._human_size(g.get('recoverable_space', 0))
+            count = g.get('file_count', 0)
+            report += f"| {i} | {rec} | {count} copies | Review & delete extras |\n"
+
+        legacy_data = by_age.get('legacy', {})
+        legacy_size = legacy_data.get('size_human', '0 B') if isinstance(legacy_data, dict) else 'N/A'
+        legacy_count = legacy_data.get('count', 0) if isinstance(legacy_data, dict) else 0
+
+        report += f"""
+---
+
+## Priority 2: Archive Legacy Files
+
+**Impact:** {legacy_size}
+
+- **Files older than 1 year:** {legacy_count:,}
+- **Recommendation:** Move to cold storage or external archive
+
+---
+
+## Priority 3: Clean Temp/Cache
+
+Common targets:
+- `node_modules/` (orphaned)
+- `__pycache__/`
+- `.cache/`
+- `*.tmp` files
+
+---
+
+## Execution Checklist
+
+- [ ] **Phase 1:** Review top 5 duplicate groups
+- [ ] **Phase 2:** Backup unique files from duplicates
+- [ ] **Phase 3:** Delete duplicate copies
+- [ ] **Phase 4:** Archive legacy files
+- [ ] **Phase 5:** Clean temporary files
+- [ ] **Phase 6:** Verify space recovered
+- [ ] **Phase 7:** Run new audit to confirm
+
+---
+
+## Success Metrics
+
+| Metric | Before | Target |
+|--------|--------|--------|
+| Recoverable Space | {dedup_info.get('recoverable_human', 'N/A')} | 0 B |
+| Duplicate Groups | {dedup_info.get('total_groups', 0):,} | 0 |
+| Legacy Files | {legacy_count:,} | Archived |
+
+---
+
+*Report generated by ITM Audit System v5*
+"""
+        return report
+    
+    def _generate_index(self, reports: List[str]) -> str:
+        """Gera índice dos relatórios."""
+        report = f"""# 📁 Audit Reports Index
+
+**Session:** {self.timestamp}
+**Generated:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+---
+
+## Reports
+
+"""
+        for r in reports:
+            name = Path(r).name
+            report += f"- [{name}](./{name})\n"
+        
+        report += f"""
+---
+
+## Quick Navigation
+
+1. **[Audit Report](./01-audit-report.md)** — Overview and statistics
+2. **[Deduplication Report](./02-deduplication-report.md)** — Duplicate analysis
+3. **[Action Plan](./03-action-plan.md)** — Prioritized actions
+
+---
+
+*Generated by ITM Audit System v5*
+"""
+        return report
+    
+    def _load_json(self, path: str) -> Dict:
+        """Carrega arquivo JSON."""
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning(f"Erro ao carregar {path}: {e}")
+            return {}
+    
+    def _save_report(self, path: Path, content: str):
+        """Salva relatório em arquivo."""
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        logger.debug(f"Relatório salvo: {path}")
+    
+    @staticmethod
+    def _human_size(size_bytes: int) -> str:
+        """Converte bytes para formato legível."""
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if size_bytes < 1024:
+                return f"{size_bytes:.1f} {unit}"
+            size_bytes /= 1024
+        return f"{size_bytes:.1f} PB"
+
+
+def main():
+    """Exemplo de uso."""
+    import sys
+    
+    if len(sys.argv) < 5:
+        print("Uso: python reporter.py <scan.json> <hash.json> <dedup.json> <class.json>")
+        sys.exit(1)
+    
+    reporter = Reporter()
+    reports = reporter.generate_all_reports(
+        scan_path=sys.argv[1],
+        hash_path=sys.argv[2],
+        dedup_path=sys.argv[3],
+        classification_path=sys.argv[4]
+    )
+    
+    print(f"Relatórios gerados:")
+    for r in reports:
+        print(f"  - {r}")
+
+
+if __name__ == "__main__":
+    main()
