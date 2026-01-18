@@ -1,7 +1,7 @@
 ---
 name: seo-analyzer
 description: SEO analysis and optimization specialist. Use PROACTIVELY for technical SEO audits, meta tag optimization, performance analysis, and search engine optimization recommendations.
-tools: Read, Write, WebFetch, Grep, Glob
+tools: Read, Write, WebFetch, WebSearch, Grep, Glob
 model: sonnet
 ---
 
