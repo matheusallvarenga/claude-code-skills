@@ -1,216 +1,311 @@
-# Claude Code Skills, Agents & MCPs
+# Claude Code Skills, Agents & MCPs v3.0.0
 
-A comprehensive collection of production-ready skills, specialized agents, and Model Context Protocols (MCPs) for Claude Code, designed to extend Claude's capabilities with specialized workflows, domain expertise, and tool integrations.
+A comprehensive, installable collection of production-ready skills, specialized agents, slash commands, and MCP integrations for Claude Code.
 
 ## Quick Stats
 
-| Category | Count | Status |
-|----------|-------|--------|
-| **Skills** | 27 | Production Ready |
-| **Agents** | 27 | Production Ready |
-| **MCPs** | 14 | Production Ready |
+| Resource | Count | Description |
+|----------|-------|-------------|
+| Skills | 33 | Reusable capability modules |
+| Agents | 28 | Specialized AI personas |
+| Commands | 45 | Slash commands for workflows |
+| Custom MCPs | 1 | obsidian-docs server with source |
+| MCP Configs | 9 | Pre-configured server templates |
+| Rules | 1 | MCP governance policy |
+| Config Templates | 3 | Settings and MCP templates |
+
+## Quick Install
+
+```bash
+git clone https://github.com/matheusallvarenga/claude-code-skills.git
+cd claude-code-skills
+chmod +x install.sh
+./install.sh --all
+```
+
+See [docs/INSTALLATION-GUIDE.md](docs/INSTALLATION-GUIDE.md) for detailed instructions.
+
+### Selective Install
+
+```bash
+./install.sh --skills           # 33 skills only
+./install.sh --agents           # 28 agents only
+./install.sh --commands         # 45 slash commands
+./install.sh --mcps             # Custom MCP servers
+./install.sh --all --force      # Everything, no prompts
+./install.sh --dry-run          # Preview without changes
+```
 
 ---
 
-## What's Included
+## Skills (33)
 
-### Skills (27)
+### Document & Office Suite (5)
 
-Skills are modular, self-contained packages that extend Claude's capabilities with specialized knowledge and workflows.
-
-#### Document & Office Suite (5)
 | Skill | Description |
 |-------|-------------|
-| `docx` | Comprehensive DOCX creation, editing, tracked changes, and comments |
-| `pdf` | PDF manipulation: text extraction, merging, splitting, forms |
+| `docx` | DOCX creation, editing, tracked changes, comments |
+| `pdf` | PDF text extraction, merge/split, forms, watermarks |
 | `pptx` | PowerPoint creation and editing with templates |
-| `xlsx` | Excel spreadsheet operations and data analysis |
+| `xlsx` | Excel operations, formulas, data analysis |
 | `doc-coauthoring` | Collaborative document editing workflows |
 
-#### Notion Integration (4)
+### Notion Integration (4)
+
 | Skill | Description |
 |-------|-------------|
-| `notion-spec-to-implementation` | Transform specs into implementation tasks |
-| `notion-meeting-intelligence` | Meeting notes to actionable items |
+| `notion-spec-to-implementation` | Transform specs into Notion tasks with acceptance criteria |
+| `notion-meeting-intelligence` | Convert meetings to action items and follow-ups |
 | `notion-research-documentation` | Research organization and documentation |
 | `notion-knowledge-capture` | Knowledge base management |
 
-#### Design & Creative (5)
+### Design & Creative (5)
+
 | Skill | Description |
 |-------|-------------|
-| `algorithmic-art` | Generative p5.js art with seeded randomness |
-| `canvas-design` | Visual design philosophy to PDF/PNG art |
-| `theme-factory` | 10 pre-set professional themes for artifacts |
-| `brand-guidelines` | Brand identity and style guide creation |
+| `algorithmic-art` | Generative art with p5.js and seeded randomness |
+| `canvas-design` | Visual design to PDF/PNG with 60+ fonts |
+| `theme-factory` | 10 professional themes (colors/fonts) |
+| `brand-guidelines` | Brand identity and style guides |
 | `frontend-design` | UI/UX design patterns and components |
 
-#### Development & Testing (5)
+### Development & Testing (5)
+
 | Skill | Description |
 |-------|-------------|
-| `mcp-builder` | Guide for creating MCP servers (Python/TypeScript) |
+| `mcp-builder` | Create MCP servers in Python (FastMCP) or TypeScript |
 | `webapp-testing` | Playwright-based web application testing |
-| `web-artifacts-builder` | Interactive web artifact creation |
+| `web-artifacts-builder` | Interactive web artifacts for demos |
 | `full-stack-project-finisher` | Complete projects from 70% to production |
 | `skill-creator` | Meta-skill for creating new skills |
 
-#### Research & Content (4)
+### Research & Content (4)
+
 | Skill | Description |
 |-------|-------------|
-| `content-research-writer` | Writing partner with research and citations |
-| `lead-research-assistant` | Lead identification and qualification |
-| `request-optimizer` | Request analysis and optimization |
+| `content-research-writer` | Research, writing, and citation management |
+| `lead-research-assistant` | Lead generation and contact strategies |
+| `request-optimizer` | **v4.0** Intelligent request analysis and routing |
 | `internal-comms` | Internal communications templates |
 
-#### Learning & Productivity (3)
+### Research Orchestration (1)
+
+| Skill | Description |
+|-------|-------------|
+| `deep-research` | Multi-agent parallel research orchestration |
+
+### Learning & Productivity (3)
+
 | Skill | Description |
 |-------|-------------|
 | `github-for-beginners` | Complete GitHub learning path |
 | `vs-code-for-beginners` | VS Code mastery guide |
-| `video-downloader` | Video download from various platforms |
+| `video-downloader` | Video download from YouTube and other platforms |
 
-#### Data & Audit (1)
+### Code Quality (1)
+
 | Skill | Description |
 |-------|-------------|
-| `itm-audit` | Forensic data audit and deduplication system |
+| `code-review` | AI-powered code review with CodeRabbit |
+
+### Discovery (1)
+
+| Skill | Description |
+|-------|-------------|
+| `find-skills` | Discover and install Claude Code skills |
+
+### Media Production (2)
+
+| Skill | Description |
+|-------|-------------|
+| `remotion-best-practices` | Video creation in React with Remotion |
+| `whisper-transcription` | Audio/video transcription with OpenAI Whisper |
+
+### Data Extraction (1)
+
+| Skill | Description |
+|-------|-------------|
+| `youtube-transcript` | Extract transcripts from YouTube videos |
+
+### Data & Audit (1)
+
+| Skill | Description |
+|-------|-------------|
+| `itm-audit` | Forensic data auditing with deduplication |
 
 ---
 
-### Agents (27)
+## Agents (28)
 
-Specialized agents are pre-configured AI personas optimized for specific tasks. See `agents/AGENTS-CATALOG.md` for complete documentation.
+### Development Team (6)
 
-#### By Category
-
-**Obsidian/PKM (5)**
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| `connection-agent` | Sonnet | Discover links between notes |
-| `moc-agent` | Sonnet | Create Maps of Content |
-| `metadata-agent` | Sonnet | Standardize frontmatter |
-| `tag-agent` | Sonnet | Normalize tag taxonomy |
-| `review-agent` | Sonnet | QA for vault enhancements |
-
-**Podcast & Media (6)**
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| `podcast-content-analyzer` | Opus | Identify viral moments |
-| `podcast-metadata-specialist` | Opus | Show notes & SEO |
-| `podcast-trend-scout` | Sonnet | Find trending topics |
-| `timestamp-precision-specialist` | Opus | Frame-accurate cuts |
-| `seo-podcast-optimizer` | Sonnet | SEO for episodes |
-| `social-media-copywriter` | Sonnet | Social content creation |
-
-**Business & Intelligence (4)**
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| `competitive-intelligence-analyst` | Sonnet | Market research & SWOT |
-| `market-research-analyst` | Sonnet | Industry analysis |
-| `sales-automator` | Sonnet | Email sequences & scripts |
-| `seo-analyzer` | Sonnet | Technical SEO audits |
-
-**Design & Interface (4)**
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| `cli-ui-designer` | Sonnet | Terminal-style interfaces |
-| `ui-ux-designer` | Sonnet | User-centered design |
-| `visual-analysis-ocr` | Sonnet | Extract text from images |
-| `video-editor` | Opus | Professional video editing |
-
-**Development (6)**
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| `prompt-engineer` | Opus | Optimize LLM prompts |
-| `fullstack-developer` | Opus | End-to-end application development |
+| Agent | Model | Description |
+|-------|-------|-------------|
+| `fullstack-developer` | Opus | Full-stack: React, Node.js, databases, APIs |
 | `frontend-developer` | Sonnet | React/Next.js, TypeScript, Tailwind |
-| `backend-architect` | Opus | System architecture, APIs, databases |
-| `code-reviewer` | Sonnet | Code review, best practices, security |
-| `task-decomposition-expert` | Sonnet | Break down complex tasks |
+| `backend-architect` | Opus | System architecture, microservices, databases |
+| `code-reviewer` | Sonnet | Code review, security, best practices |
+| `supabase-specialist` | Opus | Supabase: RLS, Edge Functions, LGPD/GDPR |
+| `task-decomposition-expert` | Sonnet | Complex task breakdown and orchestration |
 
-**Management & Curation (2)**
-| Agent | Model | Purpose |
-|-------|-------|---------|
+### Design & UX (3)
+
+| Agent | Model | Description |
+|-------|-------|-------------|
+| `cli-ui-designer` | Sonnet | Terminal-inspired web interfaces |
+| `ui-ux-designer` | Sonnet | User research, wireframes, design systems |
+| `visual-analysis-ocr` | Sonnet | Text extraction from images, OCR |
+
+### Content & Media (6)
+
+| Agent | Model | Description |
+|-------|-------|-------------|
+| `podcast-content-analyzer` | Opus | Viral moments, chapter markers, engagement |
+| `podcast-metadata-specialist` | Sonnet | SEO titles, show notes, publishing metadata |
+| `podcast-trend-scout` | Sonnet | Emerging topics, breaking developments |
+| `timestamp-precision-specialist` | Sonnet | Frame-accurate cut points, speech detection |
+| `seo-podcast-optimizer` | Sonnet | SEO optimization for episodes |
+| `social-media-copywriter` | Sonnet | Twitter, LinkedIn, Instagram content |
+
+### Business & Intelligence (4)
+
+| Agent | Model | Description |
+|-------|-------|-------------|
+| `competitive-intelligence-analyst` | Sonnet | Market research, SWOT, competitor tracking |
+| `market-research-analyst` | Sonnet | Industry analysis, trends, strategic insights |
+| `sales-automator` | Sonnet | Email sequences, proposals, scripts |
+| `seo-analyzer` | Sonnet | Technical SEO audits and recommendations |
+
+### Obsidian/PKM (5)
+
+| Agent | Model | Description |
+|-------|-------|-------------|
+| `connection-agent` | Sonnet | Knowledge graph links, orphaned notes |
+| `moc-agent` | Sonnet | Maps of Content generation |
+| `metadata-agent` | Sonnet | Frontmatter standardization |
+| `tag-agent` | Sonnet | Tag taxonomy normalization |
+| `review-agent` | Sonnet | Vault quality assurance |
+
+### Specialized (4)
+
+| Agent | Model | Description |
+|-------|-------|-------------|
+| `prompt-engineer` | Opus | LLM prompt optimization |
+| `video-editor` | Opus | Video production with FFmpeg |
 | `context-manager` | Opus | Multi-agent context management |
-| `content-curator` | Sonnet | Content quality & curation |
+| `content-curator` | Sonnet | Content quality and curation |
 
 ---
 
-### MCPs (14)
+## Commands (45)
 
-Model Context Protocols allow Claude Code to connect to external services. See `mcp/MCP-CATALOG.md` for complete documentation.
+### Agent Launchers (11)
 
-**Cloud APIs (6)**
-| MCP | Description |
-|-----|-------------|
-| `notion` | Workspace integration (docs, databases) |
-| `supabase` | Backend-as-a-Service (DB, auth, storage) |
-| `figma-desktop` | Design tool integration (local) |
-| `shadcn` | React/Tailwind components (npx) |
-| `context7` | Expanded context (Upstash) |
-| `vercel` | Deployment platform |
+| Command | Description |
+|---------|-------------|
+| `/agent [name]` | Invoke any specialized agent |
+| `/prompt-engineer` | LLM prompt optimization (Opus) |
+| `/competitive-intel` | Competitive analysis and SWOT |
+| `/podcast-analyze` | Podcast content analysis (Opus) |
+| `/social-copy` | Social media content creation |
+| `/cli-design` | CLI/Terminal interface design |
+| `/context-mgr` | Multi-agent context management |
+| `/vault-enhance` | Obsidian agent suite |
+| `/sales-auto` | Sales and email automation |
+| `/market-research` | Market research |
+| `/seo-audit` | Technical SEO audit |
 
-**Built-in (6)**
-| MCP | Description |
-|-----|-------------|
-| `markitdown` | Document conversion (PDF, DOCX, etc.) |
-| `memory` | Persistent memory between sessions |
-| `filesystem` | File system operations |
-| `github` | Repository management |
-| `fetch` | HTTP requests |
-| `context7` | Context enhancement |
+### Workflow (7)
 
-**Custom (1)**
-| MCP | Description |
-|-----|-------------|
-| `obsidian-docs` | Obsidian documentation server (Node.js) |
+| Command | Description |
+|---------|-------------|
+| `/ship` | Weekly ship protocol |
+| `/focus` | Hyperfocus mode |
+| `/council` | Archetypal Council (6 voices) |
+| `/evaluate` | Friday evaluation |
+| `/80-20` | Pareto filter |
+| `/session-type` | Switch session type |
+| `/export-session` | Export session summary |
 
-**Development (1)**
-| MCP | Description |
-|-----|-------------|
-| `genkit` | Google AI development framework |
+### MCP (8)
+
+| Command | Description |
+|---------|-------------|
+| `/mcp` | List all available MCPs |
+| `/notion-mcp` | Notion integration |
+| `/supabase-mcp` | Backend-as-a-Service |
+| `/shadcn-mcp` | React/Tailwind components |
+| `/vercel-mcp` | Deployment and infrastructure |
+| `/obsidian-mcp` | Obsidian documentation |
+| `/memory-mcp` | Persistent memory |
+| `/markitdown-mcp` | Document conversion |
+
+### Development (2)
+
+| Command | Description |
+|---------|-------------|
+| `/debug` | Quick debug workflow |
+| `/optimize` | Code optimization |
+
+### Tools (3)
+
+| Command | Description |
+|---------|-------------|
+| `/obsidian` | PKM workflow |
+| `/notion` | Project management |
+| `/miro` | Visual thinking |
+
+### AIOS Project Commands (14)
+
+| Command | Description |
+|---------|-------------|
+| `/audit` | Data and file auditing |
+| `/workflow-orchestrator` | Complex workflow orchestration |
+| 12 AIOS agent commands | Scrum Master, Dev, QA, DevOps, PM, PO, Architect, Analyst, Data Engineer, UX Expert, Squad Creator, Master |
 
 ---
 
-## Quick Start
+## MCP Servers
 
-### Using a Skill
+### Configured (9 servers in template)
 
-1. **Copy the skill to your Claude environment:**
-   ```bash
-   cp -r skills/[skill-name] ~/.claude/skills/
-   ```
+| Server | Type | Description |
+|--------|------|-------------|
+| Notion | Cloud API | Workspace document integration |
+| Supabase | Cloud API | Database, auth, Edge Functions |
+| Figma Desktop | Local | Design tool integration |
+| shadcn/ui | NPX | React/Tailwind components |
+| Context7 | NPX | Library documentation lookup |
+| Vercel | Cloud API | Deployment platform |
+| n8n | NPX Gateway | Automation workflows |
+| Tavily | Cloud API | Web search API |
+| Slack | Cloud API | Messaging integration |
 
-2. **Use in Claude Code:**
-   - Skills are automatically available after copying (hot-reload in v2.1.0+)
-   - Reference the skill in your prompts or use `/skill-name`
+### Custom MCP (included with source)
 
-3. **Check the skill:**
-   - Read `SKILL.md` for instructions
-   - Read `README.md` for overview (if available)
+| Server | Description |
+|--------|-------------|
+| `obsidian-docs` | Node.js MCP for Obsidian syntax, plugins, and API documentation |
 
-### Using an Agent
+### Built-in (enabled via settings)
 
-1. **Copy the agent to your Claude environment:**
-   ```bash
-   cp agents/[agent-name].md ~/.claude/agents/
-   ```
+markitdown, memory, filesystem, context7, github, fetch
 
-2. **Invoke in Claude Code:**
-   - Agents activate based on task context
-   - Use `/agent [agent-name]` to invoke directly
+---
 
-### Using an MCP
+## Configuration Templates
 
-1. **Add to your MCP configuration:**
-   ```bash
-   # Edit ~/.claude/mcp.json
-   ```
+| Template | Purpose |
+|----------|---------|
+| `mcp.json.template` | MCP server configuration with placeholder keys |
+| `settings.json.template` | Project settings with recommended plugins |
+| `settings.local.json.template` | Local settings with expanded permissions |
 
-2. **Enable in settings:**
-   ```bash
-   # Edit ~/.claude/settings.json
-   ```
+---
 
-3. **Restart Claude Code**
+## Plugins
+
+See [docs/PLUGINS-GUIDE.md](docs/PLUGINS-GUIDE.md) for 70+ recommended plugins organized by category, including official, superpowers, knowledge work, healthcare, and creative plugins.
 
 ---
 
@@ -220,132 +315,50 @@ Model Context Protocols allow Claude Code to connect to external services. See `
 claude-code-skills/
 ├── README.md
 ├── CHANGELOG.md
-├── .gitignore
-├── skills/                              # 27 skills
-│   ├── algorithmic-art/                 # Generative p5.js art
-│   ├── brand-guidelines/                # Brand identity
-│   ├── canvas-design/                   # Visual design to art
-│   ├── content-research-writer/         # Research & writing
-│   ├── doc-coauthoring/                 # Collaborative editing
-│   ├── docx/                            # Word document operations
-│   ├── frontend-design/                 # UI/UX patterns
-│   ├── full-stack-project-finisher/     # Project completion
-│   ├── github-for-beginners/            # GitHub learning
-│   ├── internal-comms/                  # Internal communications
-│   ├── itm-audit/                       # Data audit system
-│   ├── lead-research-assistant/         # Lead research
-│   ├── mcp-builder/                     # MCP server creation
-│   ├── notion-knowledge-capture/        # Notion knowledge base
-│   ├── notion-meeting-intelligence/     # Meeting to actions
-│   ├── notion-research-documentation/   # Research docs
-│   ├── notion-spec-to-implementation/   # Spec to tasks
-│   ├── pdf/                             # PDF manipulation
-│   ├── pptx/                            # PowerPoint operations
-│   ├── request-optimizer/               # Request optimization
-│   ├── skill-creator/                   # Create new skills
-│   ├── theme-factory/                   # Professional themes
-│   ├── video-downloader/                # Video download
-│   ├── vs-code-for-beginners/           # VS Code learning
-│   ├── web-artifacts-builder/           # Web artifacts
-│   ├── webapp-testing/                  # Playwright testing
-│   └── xlsx/                            # Excel operations
-├── agents/                              # 27 agents
-│   ├── AGENTS-CATALOG.md                # Full documentation
-│   ├── backend-architect.md
-│   ├── cli-ui-designer.md
-│   ├── code-reviewer.md
-│   ├── competitive-intelligence-analyst.md
-│   ├── connection-agent.md
-│   ├── content-curator.md
-│   ├── context-manager.md
-│   ├── frontend-developer.md
-│   ├── fullstack-developer.md
-│   ├── market-research-analyst.md
-│   ├── metadata-agent.md
-│   ├── moc-agent.md
-│   ├── podcast-content-analyzer.md
-│   ├── podcast-metadata-specialist.md
-│   ├── podcast-trend-scout.md
-│   ├── prompt-engineer.md
-│   ├── review-agent.md
-│   ├── sales-automator.md
-│   ├── seo-analyzer.md
-│   ├── seo-podcast-optimizer.md
-│   ├── social-media-copywriter.md
-│   ├── tag-agent.md
-│   ├── task-decomposition-expert.md
-│   ├── timestamp-precision-specialist.md
-│   ├── ui-ux-designer.md
-│   ├── video-editor.md
-│   └── visual-analysis-ocr.md
-└── mcp/                                 # MCP configurations
-    ├── MCP-CATALOG.md                   # Full documentation
-    └── obsidian.md                      # Obsidian workflow MCP
+├── install.sh                # Automated installer
+├── skills/ (33)              # Skill modules
+├── agents/ (28 + catalog)    # Agent definitions
+├── commands/
+│   ├── project/ (14)         # Project-scope commands
+│   └── global/ (31)          # Global commands
+├── mcp/
+│   ├── MCP-CATALOG.md        # MCP documentation
+│   ├── obsidian-docs/        # Custom MCP source
+│   └── templates/            # Config templates
+├── rules/
+│   └── mcp-usage.md          # MCP governance
+├── templates/                # Settings templates
+└── docs/
+    ├── PLUGINS-GUIDE.md      # Plugin recommendations
+    └── INSTALLATION-GUIDE.md # Setup guide
 ```
 
 ---
 
-## Skill Design Philosophy
+## Requirements
 
-These skills follow best practices:
-
-- **Progressive Disclosure**: Information loads in 3 levels (metadata -> SKILL.md -> resources)
-- **No Duplication**: Information lives in SKILL.md OR references, not both
-- **Imperative Form**: Use verb-first instructions, not second person
-- **Self-Contained**: Each skill works independently
-- **Reusable**: Designed for different users and projects
-
----
-
-## Agent Design Principles
-
-Agents are optimized for:
-
-- **Single Responsibility**: Each agent has one clear purpose
-- **Model Selection**: Opus for complex tasks, Sonnet for general use
-- **Tool Access**: Only necessary tools are enabled
-- **Proactive Activation**: Agents activate when relevant to task
-
----
-
-## Compatibility
-
-- **Claude Code**: v2.1.0+ (hot-reload support)
-- **Skills Hot-Reload**: Automatic (place in `~/.claude/skills/`)
-- **MCP Protocol**: Compatible with Claude Code MCP specification
+- Claude Code v2.1.0+ (skills hot-reload support)
+- Node.js 18+ (for obsidian-docs MCP)
+- macOS or Linux (Windows via WSL)
 
 ---
 
 ## Contributing
 
-To contribute improvements:
-
 1. Fork this repository
-2. Create a feature branch
-3. Make improvements
-4. Test thoroughly
-5. Submit a pull request
+2. Create your feature branch (`git checkout -b feat/new-skill`)
+3. Add your skill to `skills/` with a `SKILL.md` file
+4. Update this README
+5. Submit a Pull Request
 
 ---
 
 ## License
 
-All skills, agents, and MCPs are provided under the MIT License unless otherwise specified in individual LICENSE.txt files.
+This project is open source. Individual skills may include their own licenses.
 
 ---
 
-## Related Resources
+## Author
 
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
-- [Model Context Protocol Specification](https://modelcontextprotocol.io)
-- [Claude Code Changelog](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)
-
----
-
-**Created**: 2024-11-07
-**Last Updated**: 2025-01-11
-**Version**: 2.0.0
-**Total Skills**: 27
-**Total Agents**: 27
-**Total MCPs**: 14
-**Status**: Production Ready
+Matheus Allvarenga ([@matheusallvarenga](https://github.com/matheusallvarenga))

@@ -7,7 +7,7 @@ Auditar pasta de Downloads para identificar duplicatas e arquivos grandes.
 
 ### Execução
 ```
-/audit /Users/matheusallvarenga/Downloads --quick
+/audit ~/Downloads --quick
 ```
 
 ### Output Esperado
@@ -95,7 +95,7 @@ Comparar arquivos entre Google Drive e HD Externo para consolidação.
 ### Execução
 ```
 /audit --sources
-  - /Users/matheusallvarenga/Library/CloudStorage/GoogleDrive-matheusallvarenga@intentum.ai
+  - ~/Library/CloudStorage/GoogleDrive-user@example.com
   - /Volumes/HD_External/Backups
 --compare-mode
 ```

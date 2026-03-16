@@ -7,6 +7,72 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.0] - 2026-03-16
+
+### Major Release - Complete Resource Package
+
+This release transforms the repository into a fully installable package with all Claude Code resources: skills, agents, commands, MCPs, rules, configuration templates, and an automated installer.
+
+### Added
+
+#### Skills (+6 new, 33 total)
+- `deep-research` - Multi-agent parallel research orchestration for ecosystem mapping
+- `code-review` - AI-powered code review using CodeRabbit
+- `find-skills` - Discover and install Claude Code skills
+- `remotion-best-practices` - Best practices for Remotion (video creation in React)
+- `whisper-transcription` - Transcribe audio/video using OpenAI Whisper
+- `youtube-transcript` - Extract transcripts from YouTube videos
+
+#### Commands (45 new)
+**Project Commands (14):**
+- 12 AIOS agent commands (aios-master, analyst, architect, data-engineer, dev, devops, pm, po, qa, sm, squad-creator, ux-design-expert)
+- `audit` - Data and file auditing
+- `workflow-orchestrator` - Complex workflow orchestration with dependencies
+
+**Global Commands (31):**
+- 11 agent launcher commands (agent, cli-design, competitive-intel, context-mgr, market-research, podcast-analyze, prompt-engineer, sales-auto, seo-audit, social-copy, vault-enhance)
+- 2 dev commands (debug, optimize)
+- 8 MCP commands (markitdown-mcp, mcp, memory-mcp, notion-mcp, obsidian-mcp, shadcn-mcp, supabase-mcp, vercel-mcp)
+- 3 tool commands (miro, notion, obsidian)
+- 7 workflow commands (80-20, council, evaluate, export-session, focus, session-type, ship)
+
+#### Infrastructure
+- `install.sh` - Automated installer with selective flags (--skills, --agents, --commands, --mcps, --rules, --templates, --all, --force, --dry-run)
+- `rules/mcp-usage.md` - MCP governance rules (tool selection priority, Docker MCP restrictions)
+- `mcp/obsidian-docs/` - Custom MCP server with full source code (index.js, package.json)
+- `mcp/templates/mcp.json.template` - Sanitized MCP configuration template (9 servers)
+- `templates/settings.json.template` - Project settings template with recommended plugins
+- `templates/settings.local.json.template` - Local settings template with safety deny-list
+
+#### Documentation
+- `docs/PLUGINS-GUIDE.md` - 70+ recommended plugins organized by category
+- `docs/INSTALLATION-GUIDE.md` - Complete step-by-step installation guide
+
+### Changed
+- **request-optimizer**: Major upgrade from v2.0 to v4.0 with Supabase Learning Engine, AIOS adapter, Ralph adapter, unified metrics (18 files)
+- **All 28 agents**: Updated to latest refined versions (March 2026)
+- **AGENTS-CATALOG.md**: Refreshed with development team agents and routing integration
+- **MCP-CATALOG.md**: Updated with tavily, slack, n8n-mcp servers
+- **All 27 existing skills**: Updated to latest local versions
+- **README.md**: Complete rewrite with installation guide and full resource catalog
+
+### Removed
+- Personal scan data from itm-audit skill (scripts/data/*.json)
+- 350 macOS duplicate files (iCloud conflict copies)
+- Hardcoded personal paths and credentials from all files
+
+### Security
+- Sanitized all Supabase project refs and PAT tokens
+- Removed all personal directory paths
+- Configuration templates use environment variable placeholders
+- Added .gitignore for sensitive files
+
+### Compatibility
+- Compatible with Claude Code v2.1.0+ (skills hot-reload)
+- Install script supports macOS and Linux (Windows via WSL)
+
+---
+
 ## [2.0.0] - 2025-01-11
 
 ### Major Release - Complete Restructure
@@ -149,10 +215,11 @@ This release represents a complete restructure of the repository, adding 27 spec
 
 ## Version History Summary
 
-| Version | Date | Skills | Agents | MCPs |
-|---------|------|--------|--------|------|
-| 2.0.0 | 2025-01-11 | 27 | 27 | 14 |
-| 1.0.0 | 2024-11-07 | 5 | 0 | 1 |
+| Version | Date | Skills | Agents | Commands | MCPs |
+|---------|------|--------|--------|----------|------|
+| 3.0.0 | 2026-03-16 | 33 | 28 | 45 | 15 |
+| 2.0.0 | 2025-01-11 | 27 | 27 | 0 | 14 |
+| 1.0.0 | 2024-11-07 | 5 | 0 | 0 | 1 |
 
 ---
 

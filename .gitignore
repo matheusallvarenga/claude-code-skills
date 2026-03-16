@@ -22,3 +22,12 @@ node_modules/
 # Archives
 *.zip
 *.tar.gz
+
+# Sensitive data
+.env
+*.local.json
+scripts/data/*.json
+
+# macOS duplicates
+* 2.*
+* 3.*

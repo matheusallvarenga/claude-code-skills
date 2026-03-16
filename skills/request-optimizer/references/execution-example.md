@@ -2,7 +2,7 @@
 
 ## User Request (POC Example)
 
-> "Preciso analisar os arquivos do diretório `/Users/matheusallvarenga/Desktop/Dev-Tools-Projects/GitHub/intentum` e continuar com a implementação do projeto baseado nas sessões que estão em `/Users/matheusallvarenga/Desktop/Dev-Tools-Projects/ClaudeCode/Sessions/2025/11-November/2025-11-05`"
+> "Preciso analisar os arquivos do diretório `~/projects/my-app` e continuar com a implementação do projeto baseado nas sessões que estão em `~/sessions/2025/11-November/2025-11-05`"
 
 ---
 

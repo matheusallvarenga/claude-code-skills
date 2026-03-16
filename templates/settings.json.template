@@ -1,0 +1,56 @@
+{
+  "includeCoAuthoredBy": true,
+  "permissions": {
+    "allow": [
+      "Bash(npm i:*)",
+      "Bash(claude doctor)",
+      "Bash(find:*)",
+      "Read(**/*.md)",
+      "Read(**/*.txt)",
+      "Read(**/*.json)",
+      "Read(**/*.py)",
+      "Read(**/*.ts)",
+      "Read(**/*.js)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log)",
+      "Bash(ls)",
+      "Bash(pwd)",
+      "Bash(tree:*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "markitdown",
+    "memory",
+    "filesystem",
+    "context7",
+    "github",
+    "fetch",
+    "notion",
+    "supabase",
+    "figma-desktop",
+    "shadcn",
+    "vercel"
+  ],
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "coderabbit@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "episodic-memory@superpowers-marketplace": true,
+    "superpowers-chrome@superpowers-marketplace": true,
+    "superpowers@superpowers-marketplace": true,
+    "superpowers-developing-for-claude-code@superpowers-marketplace": true,
+    "superpowers-lab@superpowers-marketplace": true,
+    "elements-of-style@superpowers-marketplace": true,
+    "image-generator@dair-academy-plugins": true,
+    "llm-council@dair-academy-plugins": true
+  },
+  "language": "pt-BR",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  }
+}

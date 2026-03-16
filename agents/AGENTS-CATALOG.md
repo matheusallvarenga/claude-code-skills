@@ -1,9 +1,10 @@
 # Catálogo Completo de Agentes Claude Code
 
-> **Versão:** 1.0
-> **Data:** 2025-12-23
-> **Total de Agentes:** 22
+> **Versão:** 2.0
+> **Data:** 2026-01-23
+> **Total de Agentes:** 28
 > **Localização:** `.claude/agents/`
+> **Integração:** request-optimizer v4.0, Unified Architecture
 
 ---
 
@@ -25,24 +26,51 @@
 
 ## Visão Geral
 
-Este catálogo documenta os 22 agentes especializados disponíveis para uso com Claude Code. Cada agente é otimizado para tarefas específicas e pode ser invocado proativamente para maximizar produtividade.
+Este catálogo documenta os 28 agentes especializados disponíveis para uso com Claude Code. Cada agente é otimizado para tarefas específicas e pode ser invocado proativamente para maximizar produtividade.
+
+### Routing via request-optimizer v4.0
+
+Os agentes são selecionados automaticamente pelo `request-optimizer` baseado em:
+
+1. **Complexity Score** (0.0-1.0)
+2. **Category Matching** (keywords no prompt)
+3. **Learning History** (correções anteriores do usuário)
+
+```
+Complexity 0.3-0.5 → Claude Code Agents (Sonnet)
+Complexity 0.5-0.7 → Ralph Loop (coding) ou Agents
+Complexity > 0.7   → AIOS Kernel (multi-agent)
+```
+
+**Referência**: `.claude/skills/request-optimizer/references/agent-routing.md`
 
 ### Distribuição por Modelo
 
 | Modelo | Quantidade | Uso Recomendado |
 |--------|------------|-----------------|
-| **Sonnet** | 17 agentes | Tarefas gerais, análises, automações |
-| **Opus** | 5 agentes | Tarefas complexas, alta precisão, criação sofisticada |
+| **Sonnet** | 21 agentes | Tarefas gerais, análises, automações |
+| **Opus** | 7 agentes | Tarefas complexas, alta precisão, criação sofisticada |
+
+### Novos Agentes (v4.0)
+
+| Agente | Modelo | Descrição |
+|--------|--------|-----------|
+| `fullstack-developer` | Opus | Full-stack: React, Node.js, databases, APIs |
+| `frontend-developer` | Sonnet | Frontend: React/Next.js, TypeScript, Tailwind |
+| `backend-architect` | Opus | Arquitetura backend, microservices, databases |
+| `code-reviewer` | Sonnet | Code review, best practices, security |
+| `supabase-specialist` | Opus | Supabase: RLS, Edge Functions, LGPD |
+| `task-decomposition-expert` | Sonnet | Decomposição de tarefas complexas |
 
 ### Distribuição por Categoria
 
 ```
-Obsidian/PKM .......... 5 agentes (23%)
-Podcast & Mídia ....... 6 agentes (27%)
-Negócios .............. 4 agentes (18%)
-Design ................ 3 agentes (14%)
-Desenvolvimento ....... 2 agentes (9%)
-Gestão ................ 2 agentes (9%)
+Development ........... 6 agentes (21%) [NEW]
+Obsidian/PKM .......... 5 agentes (18%)
+Podcast & Mídia ....... 6 agentes (21%)
+Negócios .............. 4 agentes (14%)
+Design ................ 3 agentes (11%)
+Gestão ................ 4 agentes (14%)
 ```
 
 ---

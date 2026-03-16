@@ -1,8 +1,0 @@
-{
-  "phase": "SCAN",
-  "processed_count": 1000,
-  "timestamp": "2025-12-29T03:53:17.608988",
-  "results_count": 1000,
-  "errors_count": 0,
-  "last_path": "/Users/matheusallvarenga/Downloads/csv-files/.mypy_cache/3.13/abc.meta.json"
-}

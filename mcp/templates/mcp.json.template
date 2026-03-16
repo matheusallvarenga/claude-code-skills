@@ -1,0 +1,58 @@
+{
+  "mcpServers": {
+    "notion": {
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=<YOUR_SUPABASE_PROJECT_REF>",
+      "headers": {
+        "Authorization": "Bearer <YOUR_SUPABASE_PAT>"
+      }
+    },
+    "figma-desktop": {
+      "url": "http://127.0.0.1:3845/mcp"
+    },
+    "shadcn": {
+      "command": "npx",
+      "args": [
+        "shadcn@latest",
+        "mcp"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    },
+    "vercel": {
+      "url": "https://mcp.vercel.com"
+    },
+    "n8n-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "supergateway",
+        "--streamableHttp",
+        "https://<YOUR_N8N_DOMAIN>/mcp-server/http",
+        "--header",
+        "authorization:Bearer ${N8N_JWT_TOKEN}"
+      ]
+    },
+    "tavily": {
+      "type": "http",
+      "url": "https://mcp.tavily.com/mcp/?tavilyApiKey=${TAVILY_API_KEY}"
+    },
+    "slack": {
+      "url": "https://mcp.slack.com/mcp"
+    },
+    "obsidian-docs": {
+      "command": "node",
+      "args": [
+        "~/.claude/mcps/obsidian-docs/index.js"
+      ]
+    }
+  }
+}

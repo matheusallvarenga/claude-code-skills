@@ -1,0 +1,16 @@
+{
+  "name": "obsidian-docs-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for dynamic Obsidian documentation access",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["mcp", "obsidian", "documentation"],
+  "author": "Matheus Allvarenga",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}

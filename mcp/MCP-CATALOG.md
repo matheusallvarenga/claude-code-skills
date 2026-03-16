@@ -1,9 +1,10 @@
 # Catálogo Completo de MCP Servers
 
-> **Versão:** 1.0
-> **Data:** 2025-12-23
+> **Versão:** 2.0
+> **Data:** 2026-01-23
 > **Total de MCPs:** 14 (6 Cloud + 6 Built-in + 1 Custom + 1 Dev)
 > **Localização Config:** `.claude/mcp.json`
+> **Integração:** request-optimizer v4.0, Unified Architecture
 
 ---
 
@@ -149,13 +150,21 @@ Serviços externos acessados via HTTP/HTTPS.
 
 ### 1.2 Supabase
 
-**Backend-as-a-Service Integration**
+**Backend-as-a-Service Integration + Unified State (v4.0)**
 
 | Atributo | Valor |
 |----------|-------|
-| **URL** | `https://mcp.supabase.com/mcp` |
-| **Tipo** | Cloud API |
-| **Autenticação** | API Key |
+| **Tipo** | Cloud API (HTTP) |
+| **Autenticação** | Personal Access Token (PAT) - obrigatorio |
+| **Config** | Per-project (NOT global) |
+
+> **IMPORTANTE (v6.0.1):** Supabase MCP NAO esta no config global. Cada projeto define seu proprio Supabase no `.mcp.json` local com `project_ref` + PAT.
+
+#### Projetos Configurados
+
+| Projeto | project_ref | Config Location |
+|---------|-------------|-----------------|
+| YOUR_PROJECT | `<YOUR_PROJECT_REF>` | `.claude/mcp.json` |
 
 #### Funcionalidades
 
@@ -164,15 +173,47 @@ Serviços externos acessados via HTTP/HTTPS.
 - Storage de arquivos
 - Realtime subscriptions
 - Edge Functions
+- **Unified State Persistence (v4.0)**
 
-#### Configuração
+#### Configuração (per-project pattern)
 
 ```json
 {
   "supabase": {
-    "url": "https://mcp.supabase.com/mcp"
+    "type": "http",
+    "url": "https://mcp.supabase.com/mcp?project_ref=<PROJECT_REF>",
+    "headers": {
+      "Authorization": "Bearer <PAT_TOKEN>"
+    }
   }
 }
+```
+
+#### Unified Tables (v4.0)
+
+| Tabela | Propósito | RLS |
+|--------|-----------|-----|
+| `unified_executions` | Tracking de execuções (prompt, complexity, routing) | ✅ |
+| `unified_learnings` | Correções do usuário + embeddings para busca semântica | ✅ |
+| `unified_metrics` | KPIs agregados por período | ✅ |
+
+#### Queries Comuns (v4.0)
+
+```sql
+-- Registrar execução
+INSERT INTO unified_executions (prompt, complexity_score, model_used, backend_used)
+VALUES ($1, $2, $3, $4) RETURNING id;
+
+-- Buscar learnings similares
+SELECT * FROM unified_learnings
+WHERE 1 - (embedding <=> $prompt_embedding) > 0.7
+ORDER BY similarity DESC LIMIT 5;
+
+-- Métricas das últimas 24h
+SELECT backend_used, COUNT(*), AVG(complexity_score)
+FROM unified_executions
+WHERE created_at > NOW() - INTERVAL '24 hours'
+GROUP BY backend_used;
 ```
 
 #### Casos de Uso
@@ -181,6 +222,8 @@ Serviços externos acessados via HTTP/HTTPS.
 - Autenticação OAuth
 - Storage de mídia
 - APIs RESTful
+- **Persistência de estado do request-optimizer**
+- **Learning Engine (correções de usuário)**
 
 #### Quando Usar
 
@@ -188,6 +231,8 @@ Serviços externos acessados via HTTP/HTTPS.
 - Executar queries SQL
 - Gerenciar autenticação
 - Upload/download de arquivos
+- **Tracking de execuções Claude Code**
+- **Consultar learnings para ajustar routing**
 
 ---
 
@@ -735,7 +780,7 @@ cd /tmp/claude
 git clone --depth 1 https://github.com/obsidianmd/obsidian-developer-docs.git obsidian-docs
 
 # 2. Instalar dependências
-cd /Users/matheusallvarenga/Desktop/itm-dev/claude-code/MCPs/obsidian-docs
+cd ~/.claude/mcps/obsidian-docs
 npm install
 
 # 3. Testar servidor
@@ -753,7 +798,7 @@ node index.js
   "obsidian-docs": {
     "command": "node",
     "args": [
-      "/Users/matheusallvarenga/Desktop/itm-dev/claude-code/MCPs/obsidian-docs/index.js"
+      "~/.claude/mcps/obsidian-docs/index.js"
     ]
   }
 }
@@ -805,7 +850,7 @@ MCPs para desenvolvimento e debugging.
 #### Localização
 
 ```
-/Users/matheusallvarenga/Desktop/itm-dev/Google-Code/genkit-intro/my-genkit-app/
+~/projects/genkit-app/
 ├── .cursor/mcp.json
 └── .gemini/settings.json
 ```
@@ -944,16 +989,15 @@ node /path/to/mcp/index.js
 
 ## Configuração Completa Atual
 
-### ~/.claude/mcp.json
+### ~/.claude/mcp.json (Global)
+
+> **Nota (v6.0.1):** Supabase foi REMOVIDO do config global. Cada projeto define seu proprio Supabase localmente.
 
 ```json
 {
   "mcpServers": {
     "notion": {
       "url": "https://mcp.notion.com/mcp"
-    },
-    "supabase": {
-      "url": "https://mcp.supabase.com/mcp"
     },
     "figma-desktop": {
       "url": "http://127.0.0.1:3845/mcp"
@@ -968,6 +1012,10 @@ node /path/to/mcp/index.js
     },
     "vercel": {
       "url": "https://mcp.vercel.com"
+    },
+    "obsidian-docs": {
+      "command": "node",
+      "args": ["~/.claude/mcps/obsidian-docs/index.js"]
     }
   }
 }
@@ -1015,6 +1063,8 @@ node /path/to/mcp/index.js
 
 | Versão | Data | Alterações |
 |--------|------|------------|
+| 2.1 | 2026-01-29 | Supabase removido do global, estrategia per-project, nutri-command adicionado |
+| 2.0 | 2026-01-23 | Unified State v4.0, PAT obrigatorio |
 | 1.0 | 2025-12-23 | Documentação inicial de 14 MCPs |
 
 ---
